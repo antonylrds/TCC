@@ -1,5 +1,6 @@
 import React, { FormEvent, useCallback, useState } from 'react';
-import { FiLogIn } from 'react-icons/fi';
+import { useHistory } from 'react-router-dom';
+import { FiLogIn, FiLock, FiUser } from 'react-icons/fi';
 
 import { useAuth } from '../../hooks/auth';
 
@@ -14,13 +15,17 @@ const Login: React.FC = () => {
 
   const { signIn } = useAuth();
 
+  const history = useHistory();
+
   const handleSubmit = useCallback(
     async (event: FormEvent<HTMLFormElement>): Promise<void> => {
       event.preventDefault();
 
       await signIn({ email, password });
+
+      history.push('/dashboard');
     },
-    [signIn, email, password],
+    [signIn, email, password, history],
   );
 
   return (
@@ -35,6 +40,7 @@ const Login: React.FC = () => {
             name="email"
             type="email"
             placeholder="E-mail"
+            icon={FiUser}
           />
           <Input
             value={password}
@@ -42,6 +48,7 @@ const Login: React.FC = () => {
             name="password"
             type="password"
             placeholder="Senha"
+            icon={FiLock}
           />
 
           <button type="submit">

@@ -8,7 +8,9 @@ export const Container = styled.div`
   flex-direction: row;
   align-items: center;
   color: #8d91a5;
-  height: 40px;
+  height: 65px;
+  max-width: 357px;
+  width: 100%;
 
   svg {
     margin-right: 10px;

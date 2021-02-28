@@ -29,6 +29,9 @@ export const Container = styled.div`
       border: 0;
       border-radius: 25px;
       margin-top: 8px;
+      max-width: 216px;
+      width: 100%;
+      align-self: center;
 
       font-size: 24px;
       display: flex;
@@ -36,7 +39,7 @@ export const Container = styled.div`
       align-items: center;
 
       svg {
-        margin-right: 5px;
+        margin-right: 10px;
       }
     }
   }
