@@ -8,7 +8,7 @@ export const Container = styled.div`
   flex-direction: row;
   align-items: center;
   color: #8d91a5;
-  height: 50px;
+  height: 40px;
 
   svg {
     margin-right: 10px;
@@ -18,7 +18,6 @@ export const Container = styled.div`
     background: transparent;
     border: 0;
     flex: 1;
-    height: 100%;
     font-size: 24px;
 
     &::placeholder {
