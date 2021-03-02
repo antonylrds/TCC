@@ -26,6 +26,11 @@ const Login: React.FC = () => {
       try {
         await signIn({ email, password });
 
+        addToast({
+          type: 'success',
+          title: 'Usuário autenticado com sucesso',
+        });
+
         history.push('/dashboard');
       } catch (err) {
         addToast({
