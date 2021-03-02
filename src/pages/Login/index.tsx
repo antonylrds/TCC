@@ -3,6 +3,7 @@ import { useHistory } from 'react-router-dom';
 import { FiLogIn, FiLock, FiUser } from 'react-icons/fi';
 
 import { useAuth } from '../../hooks/auth';
+import { useToast } from '../../hooks/toast';
 
 import LogoImg from '../../assets/logo.png';
 
@@ -14,6 +15,7 @@ const Login: React.FC = () => {
   const [password, setPassword] = useState('');
 
   const { signIn } = useAuth();
+  const { addToast } = useToast();
 
   const history = useHistory();
 
@@ -21,9 +23,18 @@ const Login: React.FC = () => {
     async (event: FormEvent<HTMLFormElement>): Promise<void> => {
       event.preventDefault();
 
-      await signIn({ email, password });
+      try {
+        await signIn({ email, password });
 
-      history.push('/dashboard');
+        history.push('/dashboard');
+      } catch (err) {
+        addToast({
+          type: 'error',
+          title: 'Erro na autenticação',
+          description:
+            'Ocorreu um erro ao fazer login, verifique as credenciais',
+        });
+      }
     },
     [signIn, email, password, history],
   );
