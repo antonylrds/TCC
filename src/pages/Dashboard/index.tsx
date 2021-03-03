@@ -108,7 +108,11 @@ const DashBoard: React.FC = () => {
           </div>
         </form>
 
-        <div>
+        <div className="document-list">
+          <div className="results">
+            <h2>Resultado(s): 0</h2>
+          </div>
+          <div className="separator" />
           <Document />
           <Document />
         </div>

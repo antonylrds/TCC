@@ -33,6 +33,10 @@ export const Container = styled.div`
         font-weight: bold;
         border-radius: 5px;
 
+        &:hover {
+          background: ${shade(0.25, '#195786')};
+        }
+
         svg {
           margin-right: 5px;
         }
@@ -40,8 +44,14 @@ export const Container = styled.div`
     }
   }
 
-  div {
-    margin-top: 10px;
+  div.document-list {
+    margin-top: 50px;
+
+    div.results {
+      color: rgba(0, 0, 0, 0.25);
+      display: flex;
+      justify-content: flex-end;
+    }
   }
 `;
 
