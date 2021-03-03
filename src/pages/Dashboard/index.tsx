@@ -1,5 +1,7 @@
 import React, { useCallback, useState, FormEvent } from 'react';
+import { FiSearch } from 'react-icons/fi';
 import FormInput from '../../components/FormInput';
+import Document from '../../components/Document';
 
 import { Container, Header } from './styles';
 import LogoImg from '../../assets/logo.png';
@@ -98,7 +100,18 @@ const DashBoard: React.FC = () => {
             placeholder="Insira as palavras-chaves contidas na obra"
             onChange={e => handleAddKeywords(e.target.value)}
           />
+          <div className="right-aligned">
+            <button type="button">
+              <FiSearch size={20} />
+              Buscar
+            </button>
+          </div>
         </form>
+
+        <div>
+          <Document />
+          <Document />
+        </div>
       </Container>
     </>
   );

@@ -17,6 +17,31 @@ export const Container = styled.div`
       align-items: center;
       justify-content: space-between;
     }
+
+    .right-aligned {
+      display: flex;
+      justify-content: flex-end;
+
+      button {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 5px 50px;
+        background: #195786;
+        border: 0;
+        color: #fff;
+        font-weight: bold;
+        border-radius: 5px;
+
+        svg {
+          margin-right: 5px;
+        }
+      }
+    }
+  }
+
+  div {
+    margin-top: 10px;
   }
 `;
 
