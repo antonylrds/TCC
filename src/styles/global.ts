@@ -9,7 +9,7 @@ export default createGlobalStyle`
   }
 
   body {
-    background: #F0F2F5;
+    background: #FFFFFF;
   }
 
   body, input, button {
