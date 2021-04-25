@@ -5,7 +5,7 @@ import { FiLogIn, FiLock, FiUser } from 'react-icons/fi';
 import { useAuth } from '../../hooks/auth';
 import { useToast } from '../../hooks/toast';
 
-import LogoImg from '../../assets/logo.png';
+import LogoImg from '../../assets/logo-quadrada.png';
 
 import Input from '../../components/Input';
 import { Container } from './styles';
@@ -47,7 +47,7 @@ const Login: React.FC = () => {
   return (
     <>
       <Container>
-        <img src={LogoImg} alt="logomarca" width={350} />
+        <img src={LogoImg} alt="logomarca" width={250} />
         <form onSubmit={handleSubmit}>
           <h1>Entrar</h1>
           <Input
