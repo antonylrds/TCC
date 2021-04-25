@@ -3,16 +3,19 @@ import { FiSearch } from 'react-icons/fi';
 import FormInput from '../../components/FormInput';
 import Document from '../../components/Document';
 
+import { useToast } from '../../hooks/toast';
+
 import { Container, Header } from './styles';
 import LogoImg from '../../assets/logo.png';
 
 const DashBoard: React.FC = () => {
   const [title, setTitle] = useState('');
-  const [subtitle, setSubtitle] = useState('');
   const [author, setAuthor] = useState('');
   const [publicationDate, setPublicationDate] = useState('');
   const [professor, setProfessor] = useState('');
   const [keywords, setKeywords] = useState<String[]>([]);
+
+  const { addToast } = useToast();
 
   const handleRedirect = useCallback(() => {
     window.open('https://www.fapce.edu.br/index.html');
@@ -21,7 +24,23 @@ const DashBoard: React.FC = () => {
   const handleSubmit = useCallback(
     (event: FormEvent<HTMLFormElement>): void => {
       event.preventDefault();
-      console.log(title);
+
+      try {
+        console.log(title);
+        console.log(author);
+        console.log(publicationDate);
+        if (Number(publicationDate) > currentYear || Number(publicationDate) < 1) {
+          console.log(publicationDate);
+          throw new Error('Ano de publicação inválido');
+        }
+
+
+      } catch (e) {
+        addToast({
+          title: e.message,
+          type: 'error'
+        })
+      }
     },
     [title],
   );
@@ -69,8 +88,6 @@ const DashBoard: React.FC = () => {
 
           <div className="half-width">
             <FormInput
-              type="number"
-              max={currentYear}
               labelName="Ano de publicação"
               name="publicationDate"
               id="publication_dt-input"
@@ -97,7 +114,7 @@ const DashBoard: React.FC = () => {
             onChange={e => handleAddKeywords(e.target.value)}
           />
           <div className="right-aligned">
-            <button type="button">
+            <button type="submit">
               <FiSearch size={20} />
               Buscar
             </button>
