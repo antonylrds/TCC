@@ -26,6 +26,8 @@ const DashBoard: React.FC = () => {
     [title],
   );
 
+  const currentYear = new Date().getFullYear();
+
   const handleAddKeywords = useCallback(
     (newKeyword: String) => {
       setKeywords([...keywords, newKeyword]);
@@ -42,7 +44,7 @@ const DashBoard: React.FC = () => {
         </button>
       </Header>
       <Container>
-        <h1>Biblioteca Online - UniFAP</h1>
+        <h1>Repositório de TCCs de Sistemas de Informação - UniFAP</h1>
         <div className="separator" />
         <form onSubmit={handleSubmit}>
           <FormInput
@@ -53,16 +55,8 @@ const DashBoard: React.FC = () => {
             placeholder="Insira o título da obra"
             onChange={e => setTitle(e.target.value)}
           />
-          <div className="half-width">
-            <FormInput
-              labelName="Subtítulo"
-              name="subtitle"
-              id="subtitle-input"
-              value={subtitle}
-              placeholder="Insira o subtítulo da obra"
-              onChange={e => setSubtitle(e.target.value)}
-            />
 
+          <div>
             <FormInput
               labelName="Autor(a)"
               name="author"
@@ -75,11 +69,13 @@ const DashBoard: React.FC = () => {
 
           <div className="half-width">
             <FormInput
-              labelName="Data de publicação"
+              type="number"
+              max={currentYear}
+              labelName="Ano de publicação"
               name="publicationDate"
               id="publication_dt-input"
               value={publicationDate}
-              placeholder="Publicação entre..."
+              placeholder="Ano da publicação"
               onChange={e => setPublicationDate(e.target.value)}
             />
 
