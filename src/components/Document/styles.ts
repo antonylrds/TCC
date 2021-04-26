@@ -4,22 +4,20 @@ import { shade } from 'polished';
 export const Container = styled.div`
   background: #fff;
   display: flex;
-  padding: 10px 20px 10px 10px;
+  padding: 0px 0px 0px 10px;
   border-radius: 10px;
   align-items: center;
   justify-content: center;
-  transition: 0.2s;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  height: 150px;
 
-  &:hover {
-    transform: translate(10px);
-  }
 
   & + div {
     margin-top: 10px;
   }
 
   svg {
-    color: #195786;
+    color: #000000;
   }
 
   div {
@@ -35,9 +33,10 @@ export const Container = styled.div`
   button {
     background: #195786;
     border: 0;
-    border-radius: 5px;
+    border-radius: 0px 5px 5px 0px;
     padding: 10px;
-    margin-left: 10px;
+    width: 100px;
+    height: 100%;
 
     &:hover {
       background: ${shade(0.25, '#195786')};

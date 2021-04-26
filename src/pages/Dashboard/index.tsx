@@ -63,7 +63,7 @@ const DashBoard: React.FC = () => {
         </button>
       </Header>
       <Container>
-        <h1>Repositório de TCCs de Sistemas de Informação - UniFAP</h1>
+        <h1>Repositório de TCCs de Sistemas de Informação - UniFAP </h1>
         <div className="separator" />
         <form onSubmit={handleSubmit}>
           <FormInput
