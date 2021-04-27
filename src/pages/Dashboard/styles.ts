@@ -69,6 +69,10 @@ export const Header = styled.header`
     max-height: 100px;
   }
 
+  div {
+    display: flex;
+  }
+
   button {
     height: 50px;
     color: #fff;
@@ -80,5 +84,19 @@ export const Header = styled.header`
     &:hover {
       background: ${shade(0.2, '#45779d')};
     }
+
+    & + button {
+      margin-left: 10px;
+    }
+  }
+`;
+
+export const IconButton = styled.button`
+  display:flex;
+  align-items: center;
+  justify-content: center;
+
+  svg {
+    margin-right: 5px;
   }
 `;

@@ -1,11 +1,12 @@
 import React, { useCallback, useState, FormEvent } from 'react';
-import { FiSearch } from 'react-icons/fi';
+import { useHistory } from 'react-router-dom';
+import { FiSearch, FiLogIn } from 'react-icons/fi';
 import FormInput from '../../components/FormInput';
 import Document from '../../components/Document';
 
 import { useToast } from '../../hooks/toast';
 
-import { Container, Header } from './styles';
+import { Container, Header, IconButton } from './styles';
 import LogoImg from '../../assets/logo.png';
 
 const DashBoard: React.FC = () => {
@@ -16,6 +17,8 @@ const DashBoard: React.FC = () => {
   const [keywords, setKeywords] = useState<String[]>([]);
 
   const { addToast } = useToast();
+
+  const history = useHistory();
 
   const handleRedirect = useCallback(() => {
     window.open('https://www.fapce.edu.br/index.html');
@@ -58,9 +61,15 @@ const DashBoard: React.FC = () => {
     <>
       <Header>
         <img src={LogoImg} alt="LogoMarca" />
-        <button onClick={handleRedirect} type="button">
-          Acessar site da Unifap
-        </button>
+        <div>
+          <button onClick={handleRedirect} type="button">
+            Acessar site da Unifap
+          </button>
+          <IconButton onClick={() => history.push('/admin')} type="button">
+            <FiLogIn size={20} />
+            Entrar
+          </IconButton>
+        </div>
       </Header>
       <Container>
         <h1>Repositório de TCCs de Sistemas de Informação - UniFAP </h1>

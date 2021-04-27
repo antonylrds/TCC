@@ -11,12 +11,6 @@ const Document: React.FC = () => {
         <strong>
           Protótipo de Ferramenta para Armazenamento e Acesso à Produção
           Científica do Curso de Sistemas de Informação da UNIFAP
-          Protótipo de Ferramenta para Armazenamento e Acesso à Produção
-          Científica do Curso de Sistemas de Informação da UNIFAP
-          Protótipo de Ferramenta para Armazenamento e Acesso à Produção
-          Científica do Curso de Sistemas de Informação da UNIFAP
-          Protótipo de Ferramenta para Armazenamento e Acesso à Produção
-          Científica do Curso de Sistemas de Informação da UNIFAP
         </strong>
         <div className="separator" />
         <span>Autor(a): Antony Luan Rodrigues dos Santos</span>
