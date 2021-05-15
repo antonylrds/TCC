@@ -3,6 +3,7 @@ import { useHistory } from 'react-router-dom';
 import { FiSearch, FiLogIn } from 'react-icons/fi';
 import FormInput from '../../components/FormInput';
 import Document from '../../components/Document';
+import KeyWord from '../../components/KeyWord';
 
 import { useToast } from '../../hooks/toast';
 
@@ -15,6 +16,9 @@ const DashBoard: React.FC = () => {
   const [publicationDate, setPublicationDate] = useState('');
   const [professor, setProfessor] = useState('');
   const [keywords, setKeywords] = useState<String[]>([]);
+  const [newKeyword, setNewKeyword] = useState('');
+
+  const currentYear = new Date().getFullYear();
 
   const { addToast } = useToast();
 
@@ -29,30 +33,37 @@ const DashBoard: React.FC = () => {
       event.preventDefault();
 
       try {
-        console.log(title);
-        console.log(author);
-        console.log(publicationDate);
-        if (Number(publicationDate) > currentYear || Number(publicationDate) < 1) {
-          console.log(publicationDate);
+        if (
+          Number(publicationDate) > currentYear ||
+          Number(publicationDate) < 1
+        ) {
           throw new Error('Ano de publicação inválido');
         }
-
-
       } catch (e) {
         addToast({
           title: e.message,
-          type: 'error'
-        })
+          type: 'error',
+        });
       }
     },
-    [title],
+    [addToast, publicationDate, currentYear],
   );
 
-  const currentYear = new Date().getFullYear();
+  const handleAddKeyword = useCallback(
+    keyword => {
+      setKeywords([...keywords, keyword]);
+      setNewKeyword('');
+    },
+    [keywords],
+  );
 
-  const handleAddKeywords = useCallback(
-    (newKeyword: String) => {
-      setKeywords([...keywords, newKeyword]);
+  const handleRemoveKeyword = useCallback(
+    keywordtoRemove => {
+      const newKeywordsArray = keywords.filter(
+        keyword => keyword !== keywordtoRemove,
+      );
+
+      setKeywords(newKeywordsArray);
     },
     [keywords],
   );
@@ -65,7 +76,7 @@ const DashBoard: React.FC = () => {
           <button onClick={handleRedirect} type="button">
             Acessar site da Unifap
           </button>
-          <IconButton onClick={() => history.push('/admin')} type="button">
+          <IconButton onClick={() => history.push('/login')} type="button">
             <FiLogIn size={20} />
             Entrar
           </IconButton>
@@ -114,13 +125,16 @@ const DashBoard: React.FC = () => {
               onChange={e => setProfessor(e.target.value)}
             />
           </div>
-          <FormInput
+          <KeyWord
             labelName="Palavra-chave"
             name="keyword"
             id="keyword-input"
-            value={keywords as string[]}
+            value={newKeyword}
             placeholder="Insira as palavras-chaves contidas na obra"
-            onChange={e => handleAddKeywords(e.target.value)}
+            onChange={e => setNewKeyword(e.target.value)}
+            keywords={keywords}
+            handleRemoveKeyword={handleRemoveKeyword}
+            handleAddKeyword={handleAddKeyword}
           />
           <div className="right-aligned">
             <button type="submit">

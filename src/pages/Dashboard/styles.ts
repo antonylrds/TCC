@@ -92,7 +92,7 @@ export const Header = styled.header`
 `;
 
 export const IconButton = styled.button`
-  display:flex;
+  display: flex;
   align-items: center;
   justify-content: center;
 

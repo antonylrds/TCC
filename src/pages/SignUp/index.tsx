@@ -25,23 +25,18 @@ const Signup: React.FC = () => {
     async (event: FormEvent<HTMLFormElement>): Promise<void> => {
       event.preventDefault();
 
-      console.log(name, email, password, confirmPassword);
-
       try {
-
         if (password !== confirmPassword) {
           addToast({
             type: 'error',
             title: 'Erro na cadastro',
-            description:
-              'As senhas não são compatíveis',
+            description: 'As senhas não são compatíveis',
           });
         } else if (!name || !email || !password || !confirmPassword) {
           addToast({
             type: 'error',
             title: 'Erro na cadastro',
-            description:
-              'Todos dos campos devem ser preenchidos',
+            description: 'Todos dos campos devem ser preenchidos',
           });
         } else {
           await signUp({ name, email, password });
@@ -56,12 +51,11 @@ const Signup: React.FC = () => {
         addToast({
           type: 'error',
           title: 'Erro na cadastro',
-          description:
-            'Ocorreu um erro ao cadastrar, verifique os dados',
+          description: 'Ocorreu um erro ao cadastrar, verifique os dados',
         });
       }
     },
-    [signUp, email, password, history],
+    [signUp, addToast, name, email, password, history, confirmPassword],
   );
 
   return (
@@ -113,6 +107,6 @@ const Signup: React.FC = () => {
       </Container>
     </>
   );
-}
+};
 
 export default Signup;

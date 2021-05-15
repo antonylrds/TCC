@@ -57,10 +57,9 @@ const AuthProvider: React.FC = ({ children }) => {
     await api.post('/users', {
       name,
       email,
-      password
+      password,
     });
-
-  }, [])
+  }, []);
 
   const signOut = useCallback(() => {
     localStorage.removeItem('@GoBarber:token');
