@@ -5,10 +5,21 @@ import FormInput from '../../components/FormInput';
 import Document from '../../components/Document';
 import KeyWord from '../../components/KeyWord';
 
+import api from '../../services/api';
+
 import { useToast } from '../../hooks/toast';
 
 import { Container, Header, IconButton } from './styles';
 import LogoImg from '../../assets/logo.png';
+
+interface DocumentDTO {
+  id: string;
+  title: string;
+  subtitle: string;
+  author: string;
+  professor: string;
+  path: string;
+}
 
 const DashBoard: React.FC = () => {
   const [title, setTitle] = useState('');
@@ -17,6 +28,11 @@ const DashBoard: React.FC = () => {
   const [professor, setProfessor] = useState('');
   const [keywords, setKeywords] = useState<String[]>([]);
   const [newKeyword, setNewKeyword] = useState('');
+  const [documentArray, setDocumentArray] = useState<DocumentDTO[]>(
+    [] as DocumentDTO[],
+  );
+  const [page, setPage] = useState(1);
+  const [total, setTotal] = useState(0);
 
   const currentYear = new Date().getFullYear();
 
@@ -29,16 +45,20 @@ const DashBoard: React.FC = () => {
   }, []);
 
   const handleSubmit = useCallback(
-    (event: FormEvent<HTMLFormElement>): void => {
+    async (event: FormEvent<HTMLFormElement>): Promise<void> => {
       event.preventDefault();
 
       try {
         if (
-          Number(publicationDate) > currentYear ||
-          Number(publicationDate) < 1
+          publicationDate !== '' &&
+          (Number(publicationDate) > currentYear || Number(publicationDate) < 1)
         ) {
           throw new Error('Ano de publicação inválido');
         }
+
+        const response = await api.get('/papers');
+        setDocumentArray(response.data);
+        setTotal(response.data.length);
       } catch (e) {
         addToast({
           title: e.message,
@@ -146,11 +166,20 @@ const DashBoard: React.FC = () => {
 
         <div className="document-list">
           <div className="results">
-            <h2>Resultado(s): 0</h2>
+            <h2>Resultado(s): {total}</h2>
           </div>
           <div className="separator" />
-          <Document />
-          <Document />
+          {!!documentArray &&
+            documentArray.map(document => (
+              <Document
+                key={document.id}
+                title={document.title}
+                subtitle={document.subtitle}
+                author={document.author}
+                professor={document.professor}
+                downloadPath={document.path}
+              />
+            ))}
         </div>
       </Container>
     </>
