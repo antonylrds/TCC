@@ -56,7 +56,11 @@ const DashBoard: React.FC = () => {
           throw new Error('Ano de publicação inválido');
         }
 
-        const response = await api.get('/papers');
+        const response = await api.get('/papers', {
+          params: {
+            page,
+          },
+        });
         setDocumentArray(response.data);
         setTotal(response.data.length);
       } catch (e) {
@@ -66,7 +70,7 @@ const DashBoard: React.FC = () => {
         });
       }
     },
-    [addToast, publicationDate, currentYear],
+    [addToast, publicationDate, currentYear, page],
   );
 
   const handleAddKeyword = useCallback(
@@ -173,6 +177,7 @@ const DashBoard: React.FC = () => {
             documentArray.map(document => (
               <Document
                 key={document.id}
+                id={document.id}
                 title={document.title}
                 subtitle={document.subtitle}
                 author={document.author}
