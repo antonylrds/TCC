@@ -55,3 +55,49 @@ export const Container = styled.div`
     }
   }
 `;
+
+export const Header = styled.header`
+  background: #195786;
+  width: 100%;
+  height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 50px;
+
+  img {
+    max-width: 200px;
+    max-height: 100px;
+  }
+
+  div {
+    display: flex;
+  }
+
+  button {
+    height: 50px;
+    color: #fff;
+    background: #45779d;
+    border: 0;
+    padding: 10px;
+    transition: background-color 0.2s;
+
+    &:hover {
+      background: ${shade(0.2, '#45779d')};
+    }
+
+    & + button {
+      margin-left: 10px;
+    }
+  }
+`;
+
+export const IconButton = styled.button`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  svg {
+    margin-right: 5px;
+  }
+`;

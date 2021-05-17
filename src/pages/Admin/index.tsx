@@ -23,7 +23,7 @@ interface DocumentDTO {
   abstract: string;
 }
 
-const DashBoard: React.FC = () => {
+const Admin: React.FC = () => {
   const [title, setTitle] = useState('');
   const [author, setAuthor] = useState('');
   const [publicationDate, setPublicationDate] = useState('');
@@ -219,4 +219,4 @@ const DashBoard: React.FC = () => {
   );
 };
 
-export default DashBoard;
+export default Admin;

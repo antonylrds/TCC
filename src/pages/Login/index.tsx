@@ -31,7 +31,7 @@ const Login: React.FC = () => {
           title: 'Usuário autenticado com sucesso',
         });
 
-        history.push('/dashboard');
+        history.push('/admin');
       } catch (err) {
         addToast({
           type: 'error',
