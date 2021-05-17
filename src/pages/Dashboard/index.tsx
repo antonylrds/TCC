@@ -200,7 +200,7 @@ const DashBoard: React.FC = () => {
                 subtitle={document.subtitle}
                 author={document.author}
                 professor={document.professor}
-                downloadPath={document.path}
+                path={document.path}
                 abstract={document.abstract}
               />
             ))}

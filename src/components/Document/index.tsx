@@ -1,8 +1,17 @@
 import React, { useCallback, useState } from 'react';
 
-import { FiFileText, FiDownload, FiChevronDown } from 'react-icons/fi';
+import {
+  FiFileText,
+  FiDownload,
+  FiChevronDown,
+  FiEdit,
+  FiTrash,
+} from 'react-icons/fi';
 import api from '../../services/api';
 import { Container, ActionButtons, DocumentDetails, Abstract } from './styles';
+
+import { useAuth } from '../../hooks/auth';
+import { useToast } from '../../hooks/toast';
 
 interface DocumentDTO {
   id: string;
@@ -10,18 +19,28 @@ interface DocumentDTO {
   subtitle: string;
   author: string;
   professor: string;
-  downloadPath: string;
+  path: string;
   abstract: string;
 }
 
-const Document: React.FC<DocumentDTO> = ({
+interface DocumentAdminDTO extends DocumentDTO {
+  updateDocuments?: Function;
+}
+
+const Document: React.FC<DocumentAdminDTO> = ({
   id,
   title,
   author,
   professor,
   abstract,
+  updateDocuments,
 }) => {
   const [show, setShow] = useState(false);
+
+  const { user } = useAuth();
+  const { addToast } = useToast();
+
+  const iconSize = user ? 30 : 50;
 
   const handleDownload = useCallback(async (paperId, fileTitle) => {
     const response = await api.get(`/papers/download/${paperId}`, {
@@ -39,6 +58,35 @@ const Document: React.FC<DocumentDTO> = ({
     setShow(!show);
   };
 
+  const handleRemove = useCallback(
+    async paperId => {
+      try {
+        await api.delete(`/papers/${paperId}`, {
+          headers: {
+            Authorization: localStorage.getItem('@TCC:token'),
+          },
+        });
+        addToast({
+          type: 'success',
+          title: 'TCC removido com sucesso.',
+        });
+
+        console.log(updateDocuments);
+
+        if (updateDocuments) {
+          console.log('testeste');
+          updateDocuments();
+        }
+      } catch (e) {
+        addToast({
+          type: 'error',
+          title: e.response.data.message,
+        });
+      }
+    },
+    [addToast, updateDocuments],
+  );
+
   return (
     <>
       <Container>
@@ -50,11 +98,21 @@ const Document: React.FC<DocumentDTO> = ({
           <span>Orientador(a): {professor}</span>
         </DocumentDetails>
         <ActionButtons>
+          {user && (
+            <>
+              <button type="button" onClick={() => handleDownload(id, title)}>
+                <FiEdit size={iconSize} />
+              </button>
+              <button type="button" onClick={() => handleRemove(id)}>
+                <FiTrash size={iconSize} />
+              </button>
+            </>
+          )}
           <button type="button" onClick={() => handleDownload(id, title)}>
-            <FiDownload size={50} />
+            <FiDownload size={iconSize} />
           </button>
           <button type="button" onClick={handleCollapse}>
-            <FiChevronDown size={50} />
+            <FiChevronDown size={iconSize + 10} />
           </button>
         </ActionButtons>
       </Container>

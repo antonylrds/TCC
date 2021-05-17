@@ -33,7 +33,7 @@ const Admin: React.FC = () => {
   const [documentArray, setDocumentArray] = useState<DocumentDTO[]>(
     [] as DocumentDTO[],
   );
-  const [page, setPage] = useState(3);
+  const [page, setPage] = useState(1);
   const [total, setTotal] = useState(0);
 
   const currentYear = new Date().getFullYear();
@@ -200,8 +200,9 @@ const Admin: React.FC = () => {
                 subtitle={document.subtitle}
                 author={document.author}
                 professor={document.professor}
-                downloadPath={document.path}
+                path={document.path}
                 abstract={document.abstract}
+                updateDocuments={getPapers}
               />
             ))}
         </div>

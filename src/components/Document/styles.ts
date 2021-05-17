@@ -13,6 +13,7 @@ export const Container = styled.div`
   justify-content: stretch;
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
   height: 150px;
+  border: 1px solid #9d9d9d;
 
   svg {
     color: #000000;
@@ -55,6 +56,11 @@ export const ActionButtons = styled.div`
     }
     svg {
       color: #fff;
+    }
+
+    &:not(:first-child) {
+      border-top: 1px solid #ffffff;
+      border-radius: 0px 0px 5px 0px;
     }
   }
 `;
