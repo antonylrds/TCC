@@ -1,9 +1,10 @@
-import React, { useCallback, useState, FormEvent } from 'react';
+import React, { useCallback, useState, FormEvent, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { FiSearch, FiLogIn } from 'react-icons/fi';
 import FormInput from '../../components/FormInput';
 import Document from '../../components/Document';
 import KeyWord from '../../components/KeyWord';
+import Pagination from '../../components/Pagination';
 
 import api from '../../services/api';
 
@@ -32,10 +33,12 @@ const DashBoard: React.FC = () => {
   const [documentArray, setDocumentArray] = useState<DocumentDTO[]>(
     [] as DocumentDTO[],
   );
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState(3);
   const [total, setTotal] = useState(0);
 
   const currentYear = new Date().getFullYear();
+
+  const limit = 10;
 
   const { addToast } = useToast();
 
@@ -45,42 +48,67 @@ const DashBoard: React.FC = () => {
     window.open('https://www.fapce.edu.br/index.html');
   }, []);
 
+  const getPapers = useCallback(async () => {
+    try {
+      if (
+        publicationDate !== '' &&
+        (Number(publicationDate) > currentYear || Number(publicationDate) < 1)
+      ) {
+        throw new Error('Ano de publicação inválido');
+      }
+
+      const response = await api.get('/papers', {
+        params: {
+          page,
+          limit,
+          title,
+          author,
+          publicationYear: publicationDate,
+          professor,
+          keywords: JSON.stringify(keywords),
+        },
+      });
+      setDocumentArray(response.data.papers);
+      setTotal(response.data.total);
+    } catch (e) {
+      addToast({
+        title: e.response.data.message,
+        type: 'info',
+      });
+      setDocumentArray([] as DocumentDTO[]);
+      setTotal(0);
+    }
+  }, [
+    addToast,
+    publicationDate,
+    currentYear,
+    page,
+    title,
+    author,
+    professor,
+    keywords,
+  ]);
+
   const handleSubmit = useCallback(
     async (event: FormEvent<HTMLFormElement>): Promise<void> => {
       event.preventDefault();
-
-      try {
-        if (
-          publicationDate !== '' &&
-          (Number(publicationDate) > currentYear || Number(publicationDate) < 1)
-        ) {
-          throw new Error('Ano de publicação inválido');
-        }
-
-        const response = await api.get('/papers', {
-          params: {
-            page,
-            limit: 10,
-            title,
-            author,
-          },
-        });
-        setDocumentArray(response.data);
-        setTotal(response.data.length);
-      } catch (e) {
-        addToast({
-          title: e.message,
-          type: 'error',
-        });
-      }
+      setPage(1);
+      getPapers();
     },
-    [addToast, publicationDate, currentYear, page],
+    [getPapers],
   );
+
+  useEffect(() => {
+    getPapers();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [page]);
 
   const handleAddKeyword = useCallback(
     keyword => {
-      setKeywords([...keywords, keyword]);
-      setNewKeyword('');
+      if (keyword !== '') {
+        setKeywords([...keywords, keyword]);
+        setNewKeyword('');
+      }
     },
     [keywords],
   );
@@ -136,6 +164,9 @@ const DashBoard: React.FC = () => {
 
           <div className="half-width">
             <FormInput
+              type="number"
+              max={currentYear}
+              min={1}
               labelName="Ano de publicação"
               name="publicationDate"
               id="publication_dt-input"
@@ -191,6 +222,15 @@ const DashBoard: React.FC = () => {
               />
             ))}
         </div>
+
+        {total > 0 && (
+          <Pagination
+            page={page}
+            totalResults={total}
+            pageLimit={limit}
+            setPage={setPage}
+          />
+        )}
       </Container>
     </>
   );

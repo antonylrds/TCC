@@ -36,7 +36,6 @@ const Document: React.FC<DocumentDTO> = ({
   }, []);
 
   const handleCollapse = (): void => {
-    console.log(show);
     setShow(!show);
   };
 

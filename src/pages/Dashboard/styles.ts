@@ -19,6 +19,7 @@ export const Container = styled.div`
     }
 
     .right-aligned {
+      margin-top: 10px;
       display: flex;
       justify-content: flex-end;
 
