@@ -19,6 +19,7 @@ interface DocumentDTO {
   author: string;
   professor: string;
   path: string;
+  abstract: string;
 }
 
 const DashBoard: React.FC = () => {
@@ -59,6 +60,9 @@ const DashBoard: React.FC = () => {
         const response = await api.get('/papers', {
           params: {
             page,
+            limit: 10,
+            title,
+            author,
           },
         });
         setDocumentArray(response.data);
@@ -183,6 +187,7 @@ const DashBoard: React.FC = () => {
                 author={document.author}
                 professor={document.professor}
                 downloadPath={document.path}
+                abstract={document.abstract}
               />
             ))}
         </div>
