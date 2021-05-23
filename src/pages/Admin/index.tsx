@@ -6,12 +6,17 @@ import Document from '../../components/Document';
 import KeyWord from '../../components/KeyWord';
 import Pagination from '../../components/Pagination';
 import Header from '../../components/Header';
+import FormModal from '../../components/FormModal';
 
 import api from '../../services/api';
 
 import { useToast } from '../../hooks/toast';
 
 import { Container } from './styles';
+
+interface KeywordInterface {
+  word: string;
+}
 
 interface DocumentDTO {
   id: string;
@@ -21,6 +26,8 @@ interface DocumentDTO {
   professor: string;
   path: string;
   abstract: string;
+  publicationDate: Date;
+  keyWords: KeywordInterface[] | null;
 }
 
 const Admin: React.FC = () => {
@@ -35,6 +42,10 @@ const Admin: React.FC = () => {
   );
   const [page, setPage] = useState(1);
   const [total, setTotal] = useState(0);
+  const [openModal, setOpenModal] = useState(false);
+  const [currentDocument, setCurrentDocument] = useState<DocumentDTO>(
+    {} as DocumentDTO,
+  );
 
   const currentYear = new Date().getFullYear();
 
@@ -195,14 +206,10 @@ const Admin: React.FC = () => {
             documentArray.map(document => (
               <Document
                 key={document.id}
-                id={document.id}
-                title={document.title}
-                subtitle={document.subtitle}
-                author={document.author}
-                professor={document.professor}
-                path={document.path}
-                abstract={document.abstract}
+                tcc={document}
                 updateDocuments={getPapers}
+                openModal={setOpenModal}
+                setTcc={setCurrentDocument}
               />
             ))}
         </div>
@@ -216,6 +223,11 @@ const Admin: React.FC = () => {
           />
         )}
       </Container>
+      <FormModal
+        open={openModal}
+        setOpen={setOpenModal}
+        tcc={currentDocument}
+      />
     </>
   );
 };

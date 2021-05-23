@@ -14,8 +14,14 @@ const Routes: React.FC = () => {
     <Switch>
       <Route path="/" render={() => <Redirect to="/dashboard" />} exact />
       <Route path="/signUp" component={Signup} />
-      <Route path="/dashboard" component={Dashboard} />
-      <Route path="/login" component={Login} />
+      <Route
+        path="/dashboard"
+        render={() => (!user ? <Dashboard /> : <Redirect to="/admin" />)}
+      />
+      <Route
+        path="/login"
+        render={() => (!user ? <Login /> : <Redirect to="/admin" />)}
+      />
       <Route
         path="/admin"
         render={() => (user ? <Admin /> : <Redirect to="/dashboard" />)}

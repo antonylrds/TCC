@@ -21,6 +21,7 @@ interface DocumentDTO {
   professor: string;
   path: string;
   abstract: string;
+  publicationDate: Date;
 }
 
 const DashBoard: React.FC = () => {
@@ -193,16 +194,7 @@ const DashBoard: React.FC = () => {
           <div className="separator" />
           {!!documentArray &&
             documentArray.map(document => (
-              <Document
-                key={document.id}
-                id={document.id}
-                title={document.title}
-                subtitle={document.subtitle}
-                author={document.author}
-                professor={document.professor}
-                path={document.path}
-                abstract={document.abstract}
-              />
+              <Document key={document.id} tcc={document} />
             ))}
         </div>
 
