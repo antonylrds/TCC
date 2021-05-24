@@ -132,6 +132,15 @@ const Admin: React.FC = () => {
     [keywords],
   );
 
+  const handleEnterPress = useCallback(
+    e => {
+      if (e.key === 'Enter') {
+        handleAddKeyword(newKeyword);
+      }
+    },
+    [newKeyword, handleAddKeyword],
+  );
+
   return (
     <>
       <Header />
@@ -191,6 +200,7 @@ const Admin: React.FC = () => {
             keywords={keywords}
             handleRemoveKeyword={handleRemoveKeyword}
             handleAddKeyword={handleAddKeyword}
+            onKeyPress={handleEnterPress}
           />
           <div className="right-aligned">
             <button type="submit">
@@ -238,8 +248,13 @@ const Admin: React.FC = () => {
         open={openEditModal}
         setOpen={setOpenEditModal}
         tcc={currentDocument}
+        updatePapers={getPapers}
       />
-      <CreateModal open={openCreateModal} setOpen={setOpenCreateModal} />
+      <CreateModal
+        open={openCreateModal}
+        setOpen={setOpenCreateModal}
+        updatePapers={getPapers}
+      />
     </>
   );
 };

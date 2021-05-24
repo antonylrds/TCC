@@ -52,6 +52,7 @@ const Document: React.FC<DocumentAdminDTO> = ({
     author,
     abstract,
     keyWords,
+    path,
   } = tcc;
 
   const [show, setShow] = useState(false);
@@ -61,17 +62,27 @@ const Document: React.FC<DocumentAdminDTO> = ({
 
   const iconSize = user ? 20 : 50;
 
-  const handleDownload = useCallback(async (paperId, fileTitle) => {
-    const response = await api.get(`/papers/download/${paperId}`, {
-      responseType: 'blob',
-    });
-    const url = window.URL.createObjectURL(new Blob([response.data]));
-    const link = document.createElement('a');
-    link.href = url;
-    link.setAttribute('download', `${fileTitle}.docx`);
-    document.body.appendChild(link);
-    link.click();
-  }, []);
+  const handleDownload = useCallback(
+    async (paperId, fileTitle) => {
+      const response = await api.get(`/papers/download/${paperId}`, {
+        responseType: 'blob',
+      });
+
+      const regex = /^([^\\]*)\.(\w+)$/;
+      const matches = path.match(regex);
+
+      if (matches) {
+        const extension = matches[2];
+        const url = window.URL.createObjectURL(new Blob([response.data]));
+        const link = document.createElement('a');
+        link.href = url;
+        link.setAttribute('download', `${fileTitle}.${extension}`);
+        document.body.appendChild(link);
+        link.click();
+      }
+    },
+    [path],
+  );
 
   const handleCollapse = (): void => {
     setShow(!show);

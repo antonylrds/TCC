@@ -45,6 +45,7 @@ interface ControlModalInterface {
   tcc?: TccInterface;
   open: boolean;
   setOpen: Function;
+  updatePapers: Function;
 }
 
 
@@ -52,6 +53,7 @@ const EditModal: React.FC<ControlModalInterface> = ({
   open,
   setOpen,
   tcc: currentTcc,
+  updatePapers
 }) => {
   const [tcc, setTcc] = useState<TccInterface>({} as TccInterface);
   const [newKeyword, setNewKeyword] = useState('');
@@ -84,11 +86,13 @@ const EditModal: React.FC<ControlModalInterface> = ({
           },
         });
 
+        updatePapers();
         setOpen(false);
         addToast({
           type: 'success',
           title: 'Editado com sucesso'
         });
+
       } catch (err) {
         addToast({
           type: 'error',
@@ -96,7 +100,7 @@ const EditModal: React.FC<ControlModalInterface> = ({
         });
       }
     },
-    [tcc, addToast, setOpen],
+    [tcc, addToast, setOpen, updatePapers],
   );
 
   const handleDateChange = useCallback(
@@ -291,7 +295,7 @@ const EditModal: React.FC<ControlModalInterface> = ({
           </Button>
         </DialogActions>
       </Dialog>
-      <UploadModal tccId={tcc.id} open={uploadModalOpen} setOpen={setUploadModalOpen} />
+      <UploadModal tccId={tcc.id} open={uploadModalOpen} setOpen={setUploadModalOpen} updatePapers={updatePapers} />
     </div>
   ) : null;
 };

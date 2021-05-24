@@ -24,6 +24,7 @@ interface ControlModalInterface {
   tccId: string;
   open: boolean;
   setOpen: Function;
+  updatePapers: Function;
 }
 
 interface FileProps {
@@ -36,6 +37,7 @@ const UploadModal: React.FC<ControlModalInterface> = ({
   tccId,
   open,
   setOpen,
+  updatePapers,
 }) => {
   const [uploadedFiles, setUploadedFiles] = useState<FileProps[]>([]);
 
@@ -58,6 +60,7 @@ const UploadModal: React.FC<ControlModalInterface> = ({
         title: 'Arquivo atualizado com sucesso',
       });
 
+      updatePapers();
       handleClose();
     } catch (err) {
       addToast({
