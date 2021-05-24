@@ -32,8 +32,6 @@ export const Container = styled(animated.div) <ContainerProps>`
 
   display: flex;
 
-  z-index: 1301;
-
   & + div {
     margin-top: 8px;
   }
