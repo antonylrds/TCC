@@ -1,7 +1,8 @@
 import React, { useCallback, useState, FormEvent, useEffect } from 'react';
-import { FiPlus, FiSearch } from 'react-icons/fi';
+import { FiPlus, FiSearch, FiUsers } from 'react-icons/fi';
 
 import Button from '@material-ui/core/Button';
+import Grid from '@material-ui/core/Grid';
 import FormInput from '../../components/FormInput';
 import Document from '../../components/Document';
 import KeyWord from '../../components/KeyWord';
@@ -9,6 +10,7 @@ import Pagination from '../../components/Pagination';
 import Header from '../../components/Header';
 import EditModal from '../../components/EditModal';
 import CreateModal from '../../components/CreateModal';
+import UsersModal from '../../components/UsersModal';
 
 import api from '../../services/api';
 
@@ -46,6 +48,7 @@ const Admin: React.FC = () => {
   const [total, setTotal] = useState(0);
   const [openEditModal, setOpenEditModal] = useState(false);
   const [openCreateModal, setOpenCreateModal] = useState(false);
+  const [openUsersModal, setOpenUsersModal] = useState(false);
   const [currentDocument, setCurrentDocument] = useState<DocumentDTO>(
     {} as DocumentDTO,
   );
@@ -145,7 +148,22 @@ const Admin: React.FC = () => {
     <>
       <Header />
       <Container>
-        <h1>Repositório de TCCs de Sistemas de Informação - UniFAP </h1>
+        <Grid container justify="space-between">
+          <Grid item xs={11}>
+            <h1>Repositório de TCCs de Sistemas de Informação - UniFAP </h1>
+          </Grid>
+          <Grid item xs>
+            <Button
+              fullWidth
+              variant="outlined"
+              color="default"
+              startIcon={<FiUsers />}
+              onClick={() => setOpenUsersModal(true)}
+            >
+              Usuários
+            </Button>
+          </Grid>
+        </Grid>
         <div className="separator" />
         <form onSubmit={handleSubmit}>
           <FormInput
@@ -255,6 +273,8 @@ const Admin: React.FC = () => {
         setOpen={setOpenCreateModal}
         updatePapers={getPapers}
       />
+
+      <UsersModal open={openUsersModal} setOpen={setOpenUsersModal} />
     </>
   );
 };

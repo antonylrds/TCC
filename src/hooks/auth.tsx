@@ -54,11 +54,19 @@ const AuthProvider: React.FC = ({ children }) => {
   }, []);
 
   const signUp = useCallback(async ({ name, email, password }) => {
-    await api.post('/users', {
-      name,
-      email,
-      password,
-    });
+    await api.post(
+      '/users',
+      {
+        name,
+        email,
+        password,
+      },
+      {
+        headers: {
+          Authorization: localStorage.getItem('@TCC:token'),
+        },
+      },
+    );
   }, []);
 
   const signOut = useCallback(() => {
