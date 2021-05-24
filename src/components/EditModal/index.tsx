@@ -90,7 +90,6 @@ const EditModal: React.FC<ControlModalInterface> = ({
           title: 'Editado com sucesso'
         });
       } catch (err) {
-        console.log(err.response.data);
         addToast({
           type: 'error',
           title: err.response.data.message
