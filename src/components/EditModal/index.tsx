@@ -48,7 +48,7 @@ interface ControlModalInterface {
 }
 
 
-const FormDialog: React.FC<ControlModalInterface> = ({
+const EditModal: React.FC<ControlModalInterface> = ({
   open,
   setOpen,
   tcc: currentTcc,
@@ -85,10 +85,15 @@ const FormDialog: React.FC<ControlModalInterface> = ({
         });
 
         setOpen(false);
+        addToast({
+          type: 'success',
+          title: 'Editado com sucesso'
+        });
       } catch (err) {
+        console.log(err.response.data);
         addToast({
           type: 'error',
-          title: err.response.data.message,
+          title: err.response.data.message
         });
       }
     },
@@ -228,8 +233,8 @@ const FormDialog: React.FC<ControlModalInterface> = ({
             <Grid item xs={12}>
               <TextField
                 margin="dense"
-                id="professorEdit"
-                label="Orientador(a)"
+                id="palavraEdit"
+                label="Palavra-chave"
                 type="text"
                 fullWidth
                 value={newKeyword}
@@ -243,6 +248,7 @@ const FormDialog: React.FC<ControlModalInterface> = ({
                         ? tcc.keyWords.map(element => {
                           return (
                             <Chip
+                              key={element.word}
                               deleteIcon={<FiX />}
                               onDelete={() => handleRemoveKeyword(element.word)}
                               label={element.word}
@@ -291,4 +297,4 @@ const FormDialog: React.FC<ControlModalInterface> = ({
   ) : null;
 };
 
-export default FormDialog;
+export default EditModal;

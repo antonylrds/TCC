@@ -7,7 +7,8 @@ import Document from '../../components/Document';
 import KeyWord from '../../components/KeyWord';
 import Pagination from '../../components/Pagination';
 import Header from '../../components/Header';
-import FormModal from '../../components/FormModal';
+import EditModal from '../../components/EditModal';
+import CreateModal from '../../components/CreateModal';
 
 import api from '../../services/api';
 
@@ -43,7 +44,8 @@ const Admin: React.FC = () => {
   );
   const [page, setPage] = useState(1);
   const [total, setTotal] = useState(0);
-  const [openModal, setOpenModal] = useState(false);
+  const [openEditModal, setOpenEditModal] = useState(false);
+  const [openCreateModal, setOpenCreateModal] = useState(false);
   const [currentDocument, setCurrentDocument] = useState<DocumentDTO>(
     {} as DocumentDTO,
   );
@@ -200,7 +202,12 @@ const Admin: React.FC = () => {
 
         <div className="document-list">
           <div className="results">
-            <Button variant="text" color="default" startIcon={<FiPlus />}>
+            <Button
+              variant="text"
+              color="default"
+              startIcon={<FiPlus />}
+              onClick={() => setOpenCreateModal(true)}
+            >
               Adicionar TCC
             </Button>
             <h2>Resultado(s): {total}</h2>
@@ -212,7 +219,7 @@ const Admin: React.FC = () => {
                 key={document.id}
                 tcc={document}
                 updateDocuments={getPapers}
-                openModal={setOpenModal}
+                openModal={setOpenEditModal}
                 setTcc={setCurrentDocument}
               />
             ))}
@@ -227,11 +234,12 @@ const Admin: React.FC = () => {
           />
         )}
       </Container>
-      <FormModal
-        open={openModal}
-        setOpen={setOpenModal}
+      <EditModal
+        open={openEditModal}
+        setOpen={setOpenEditModal}
         tcc={currentDocument}
       />
+      <CreateModal open={openCreateModal} setOpen={setOpenCreateModal} />
     </>
   );
 };
