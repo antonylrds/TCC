@@ -1,6 +1,7 @@
 import React, { useCallback, useState, FormEvent, useEffect } from 'react';
-import { FiSearch } from 'react-icons/fi';
+import { FiPlus, FiSearch } from 'react-icons/fi';
 
+import Button from '@material-ui/core/Button';
 import FormInput from '../../components/FormInput';
 import Document from '../../components/Document';
 import KeyWord from '../../components/KeyWord';
@@ -199,6 +200,9 @@ const Admin: React.FC = () => {
 
         <div className="document-list">
           <div className="results">
+            <Button variant="text" color="default" startIcon={<FiPlus />}>
+              Adicionar TCC
+            </Button>
             <h2>Resultado(s): {total}</h2>
           </div>
           <div className="separator" />

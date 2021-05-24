@@ -14,13 +14,16 @@ import {
   MuiPickersUtilsProvider,
   KeyboardDatePicker,
 } from '@material-ui/pickers';
-import { FiEdit, FiPlus, FiX } from 'react-icons/fi';
+
+
+
+import { FiEdit, FiPlus, FiUploadCloud, FiX } from 'react-icons/fi';
 
 import { ptBR } from 'date-fns/locale';
 import IconButton from '@material-ui/core/IconButton';
-import { useToast } from '../../hooks/toast';
-
+import UploadModal from '../UploadModal';
 import api from '../../services/api';
+import { useToast } from '../../hooks/toast';
 
 interface KeywordInterface {
   word: string;
@@ -44,6 +47,7 @@ interface ControlModalInterface {
   setOpen: Function;
 }
 
+
 const FormDialog: React.FC<ControlModalInterface> = ({
   open,
   setOpen,
@@ -51,6 +55,7 @@ const FormDialog: React.FC<ControlModalInterface> = ({
 }) => {
   const [tcc, setTcc] = useState<TccInterface>({} as TccInterface);
   const [newKeyword, setNewKeyword] = useState('');
+  const [uploadModalOpen, setUploadModalOpen] = useState<boolean>(false);
 
   const { addToast } = useToast();
 
@@ -70,10 +75,8 @@ const FormDialog: React.FC<ControlModalInterface> = ({
 
       try {
         await api.put(`/papers/${tcc.id}`, {
-          params: {
-            ...tcc,
-            keywords: JSON.stringify(tcc.keyWords?.map((element) => element.word)),
-          },
+          ...tcc,
+          keywords: JSON.stringify(tcc.keyWords?.map((element) => element.word)),
 
         }, {
           headers: {
@@ -147,7 +150,20 @@ const FormDialog: React.FC<ControlModalInterface> = ({
           <FiEdit size={20} /> Editar
         </DialogTitle>
         <DialogContent>
-          <Grid style={{ overflow: 'hidden' }} container spacing={3}>
+          <Grid container justify="flex-end" spacing={3}>
+            <Grid item xs={4}>
+              <Button
+                fullWidth
+                variant="contained"
+                color="default"
+                startIcon={<FiUploadCloud />}
+                onClick={() => setUploadModalOpen(true)}
+              >
+                Alterar arquivo do TCC
+              </Button>
+            </Grid>
+          </Grid>
+          <Grid container spacing={3}>
             <Grid item xs={12}>
               <TextField
                 margin="dense"
@@ -270,6 +286,7 @@ const FormDialog: React.FC<ControlModalInterface> = ({
           </Button>
         </DialogActions>
       </Dialog>
+      <UploadModal tccId={tcc.id} open={uploadModalOpen} setOpen={setUploadModalOpen} />
     </div>
   ) : null;
 };

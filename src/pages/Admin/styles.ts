@@ -51,7 +51,9 @@ export const Container = styled.div`
     div.results {
       color: rgba(0, 0, 0, 0.25);
       display: flex;
-      justify-content: flex-end;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 5px;
     }
   }
 `;
