@@ -3,6 +3,7 @@ import { FiPlus, FiSearch, FiUsers } from 'react-icons/fi';
 
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
+import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import FormInput from '../../components/FormInput';
 import Document from '../../components/Document';
 import KeyWord from '../../components/KeyWord';
@@ -34,6 +35,14 @@ interface DocumentDTO {
   keyWords: KeywordInterface[] | null;
 }
 
+const theme = createMuiTheme({
+  palette: {
+    primary: {
+      main: '#195786',
+    },
+  },
+});
+
 const Admin: React.FC = () => {
   const [title, setTitle] = useState('');
   const [author, setAuthor] = useState('');
@@ -55,7 +64,7 @@ const Admin: React.FC = () => {
 
   const currentYear = new Date().getFullYear();
 
-  const limit = 10;
+  const limit = 5;
 
   const { addToast } = useToast();
 
@@ -153,15 +162,17 @@ const Admin: React.FC = () => {
             <h1>Repositório de TCCs de Sistemas de Informação - UniFAP </h1>
           </Grid>
           <Grid item xs>
-            <Button
-              fullWidth
-              variant="outlined"
-              color="default"
-              startIcon={<FiUsers />}
-              onClick={() => setOpenUsersModal(true)}
-            >
-              Usuários
-            </Button>
+            <ThemeProvider theme={theme}>
+              <Button
+                fullWidth
+                variant="contained"
+                color="primary"
+                startIcon={<FiUsers />}
+                onClick={() => setOpenUsersModal(true)}
+              >
+                Usuários
+              </Button>
+            </ThemeProvider>
           </Grid>
         </Grid>
         <div className="separator" />
@@ -230,14 +241,16 @@ const Admin: React.FC = () => {
 
         <div className="document-list">
           <div className="results">
-            <Button
-              variant="text"
-              color="default"
-              startIcon={<FiPlus />}
-              onClick={() => setOpenCreateModal(true)}
-            >
-              Adicionar TCC
-            </Button>
+            <ThemeProvider theme={theme}>
+              <Button
+                variant="contained"
+                color="primary"
+                startIcon={<FiPlus />}
+                onClick={() => setOpenCreateModal(true)}
+              >
+                Adicionar TCC
+              </Button>
+            </ThemeProvider>
             <h2>Resultado(s): {total}</h2>
           </div>
           <div className="separator" />

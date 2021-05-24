@@ -1,6 +1,16 @@
 import React from 'react';
 
+import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
+import PaginationUI from '@material-ui/lab/Pagination';
 import { Container } from './style';
+
+const theme = createMuiTheme({
+  palette: {
+    primary: {
+      main: '#195786',
+    },
+  },
+});
 
 interface PaginationProps {
   page: number;
@@ -17,42 +27,23 @@ const Pagination: React.FC<PaginationProps> = ({
 }) => {
   const pageTotal = Math.ceil(totalResults / pageLimit);
 
+  const handleChange = (e: any, value: number): void => {
+    setPage(value);
+  };
+
   return (
     <Container page={page}>
       <div>
-        {page - 1 > 1 && (
-          <>
-            <button type="button" onClick={() => setPage(1)}>
-              1
-            </button>
-            <span>...</span>
-          </>
-        )}
-
-        {page - 1 > 0 && (
-          <button type="button" onClick={() => setPage(page - 1)}>
-            {page - 1}
-          </button>
-        )}
-
-        <button type="button" className="active">
-          {page}
-        </button>
-
-        {page !== pageTotal && page + 1 < totalResults && (
-          <button type="button" onClick={() => setPage(page + 1)}>
-            {page + 1}
-          </button>
-        )}
-
-        {pageTotal > page + 1 && (
-          <>
-            <span>...</span>
-            <button type="button" onClick={() => setPage(pageTotal)}>
-              {pageTotal}
-            </button>
-          </>
-        )}
+        <ThemeProvider theme={theme}>
+          <PaginationUI
+            count={pageTotal}
+            boundaryCount={2}
+            shape="rounded"
+            onChange={handleChange}
+            size="large"
+            color="primary"
+          />
+        </ThemeProvider>
       </div>
     </Container>
   );
