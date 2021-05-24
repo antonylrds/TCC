@@ -149,7 +149,7 @@ const Admin: React.FC = () => {
       <Header />
       <Container>
         <Grid container justify="space-between">
-          <Grid item xs={11}>
+          <Grid item xs={10}>
             <h1>Repositório de TCCs de Sistemas de Informação - UniFAP </h1>
           </Grid>
           <Grid item xs>
