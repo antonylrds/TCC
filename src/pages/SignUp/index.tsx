@@ -63,7 +63,7 @@ const Signup: React.FC = () => {
       <Container>
         <img src={LogoImg} alt="logomarca" width={250} />
         <form onSubmit={handleSubmit}>
-          <h1>Cadastre-se</h1>
+          <h1>Cadastrar usuário</h1>
           <Input
             value={name}
             onChange={e => setName(e.target.value)}
@@ -100,7 +100,7 @@ const Signup: React.FC = () => {
           />
 
           <button type="submit">
-            <FiLogIn /> Cadastr-se
+            <FiLogIn /> Cadastrar
           </button>
         </form>
         <div />

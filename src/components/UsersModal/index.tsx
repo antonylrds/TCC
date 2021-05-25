@@ -7,7 +7,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 
 
-import { FiTrash, FiUser, FiUserPlus, FiUsers } from 'react-icons/fi';
+import { FiLock, FiTrash, FiUser, FiUserPlus, FiUsers } from 'react-icons/fi';
 
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -18,6 +18,9 @@ import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import IconButton from '@material-ui/core/IconButton';
 import { useHistory } from 'react-router-dom';
 import { useToast } from '../../hooks/toast';
+import ChangePasswordModal from "../ChangePasswordModal";
+
+import { useAuth } from '../../hooks/auth';
 
 import api from '../../services/api';
 
@@ -38,8 +41,10 @@ const CreateModal: React.FC<ControlModalInterface> = ({
 }) => {
 
   const [users, setUsers] = useState<UserInterface[]>([] as UserInterface[]);
+  const [openChangePasswordModal, setOpenChangePasswordModal] = useState(false);
 
   const { addToast } = useToast();
+  const { user } = useAuth();
   const history = useHistory();
 
   const handleClose = useCallback(() => {
@@ -104,7 +109,7 @@ const CreateModal: React.FC<ControlModalInterface> = ({
         </DialogTitle>
         <DialogContent>
           <Grid container justify="flex-start">
-            <Grid item xs={12}>
+            <Grid item xs={6}>
               <Button
                 fullWidth
                 variant="outlined"
@@ -113,6 +118,17 @@ const CreateModal: React.FC<ControlModalInterface> = ({
                 onClick={handleRedirect}
               >
                 Novo usuário
+              </Button>
+            </Grid>
+            <Grid item xs={6}>
+              <Button
+                fullWidth
+                variant="outlined"
+                color="default"
+                startIcon={<FiLock />}
+                onClick={() => { setOpenChangePasswordModal(true) }}
+              >
+                Alterar Senha
               </Button>
             </Grid>
             <Grid item xs={12}>
@@ -139,6 +155,11 @@ const CreateModal: React.FC<ControlModalInterface> = ({
           </Grid>
         </DialogContent>
       </Dialog>
+      <ChangePasswordModal
+        open={openChangePasswordModal}
+        setOpen={setOpenChangePasswordModal}
+        id={user.id}
+      />
     </div>
   );
 };

@@ -4,7 +4,10 @@ import api from '../services/api';
 
 interface AuthState {
   token: string;
-  user: object;
+  user: {
+    id: string;
+    name: string;
+  };
 }
 
 interface SignInCredentials {
@@ -19,7 +22,10 @@ interface SignUpCredentials {
 }
 
 interface AuthContextData {
-  user: object;
+  user: {
+    id: string;
+    name: string;
+  };
   signIn(credentials: SignInCredentials): Promise<void>;
   signUp(credentials: SignUpCredentials): Promise<void>;
   signOut(): void;
