@@ -11,6 +11,8 @@ import Chip from '@material-ui/core/Chip';
 import api from '../../services/api';
 import { Container, ActionButtons, DocumentDetails, Abstract } from './styles';
 
+import ConfirmDialog from '../ConfirmDialog';
+
 import { useAuth } from '../../hooks/auth';
 import { useToast } from '../../hooks/toast';
 
@@ -59,6 +61,8 @@ const Document: React.FC<DocumentAdminDTO> = ({
 
   const { user } = useAuth();
   const { addToast } = useToast();
+
+  const [openConfirmModal, setOpenConfirmModal] = useState(false);
 
   const iconSize = user ? 20 : 50;
 
@@ -149,7 +153,7 @@ const Document: React.FC<DocumentAdminDTO> = ({
                 <FiEdit size={iconSize} />
                 Editar
               </button>
-              <button type="button" onClick={() => handleRemove(id)}>
+              <button type="button" onClick={() => setOpenConfirmModal(true)}>
                 <FiTrash size={iconSize} />
                 Apagar
               </button>
@@ -170,6 +174,12 @@ const Document: React.FC<DocumentAdminDTO> = ({
           {abstract}
         </div>
       </Abstract>
+      <ConfirmDialog
+        open={openConfirmModal}
+        setOpen={setOpenConfirmModal}
+        removeTCC={handleRemove}
+        id={id}
+      />
     </>
   );
 };
